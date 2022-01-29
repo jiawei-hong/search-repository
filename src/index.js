@@ -3,11 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom";
+import RepositoryList from './components/RepositoryList';
+import Repository from './components/Repository';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+    <BrowserRouter>
+      <Routes>
+        <Route path="*" element={<App />} />
+
+        <Route path="users">
+          <Route exact path=":username">
+            <Route exact path="repos">
+              <Route exact index element={<RepositoryList />} />
+              <Route exact path=":repo" element={<Repository />} />
+            </Route>
+          </Route>
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </React.StrictMode >,
   document.getElementById('root')
 );
 
