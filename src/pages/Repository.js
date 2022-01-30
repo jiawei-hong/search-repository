@@ -8,14 +8,12 @@ function Repository() {
   const [repository, setRepository] = useState({});
 
   useEffect(() => {
-    async function getRepo() {
+    (async () => {
       const repo = await getRepository(params.username, params.repo);
 
       setRepository(repo);
-    }
-
-    getRepo();
-  }, []);
+    })()
+  }, [params.username, params.repo]);
 
   return (
     <React.Fragment>

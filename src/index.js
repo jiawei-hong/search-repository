@@ -8,8 +8,8 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import RepositoryList from './components/RepositoryList';
-import Repository from './components/Repository';
+import RepositoryList from './pages/RepositoryList';
+import Repository from './pages/Repository';
 
 ReactDOM.render(
   <React.StrictMode>
