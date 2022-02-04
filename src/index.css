@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
@@ -24,76 +28,14 @@ code {
   width: 8px;
 }
 
-header {
-  text-align: center;
+.text-color-default {
+  color: #24292f;
 }
 
-main {
-  font-size: x-large;
-  font-weight: 500;
-}
-
-main>div {
-  display: flex;
-  margin-top: 1rem;
-  cursor: pointer;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
-  user-select: none;
-  margin: 10px;
-}
-
-main>div:hover {
-  background-color: #ddd;
-}
-
-.ml-auto {
-  margin-left: auto;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-sm {
-  font-size: .5rem;
+.text-blue {
+  color: #0969da;
 }
 
 .text-gray {
   color: rgb(107 114 128);
-}
-
-.repositoryList-container {
-  height: 100vh;
-  overflow-y: scroll;
-}
-
-.repository-container {
-  border: 1px solid #ddd;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.repository-information {
-  border-top: 1px solid #ddd;
-}
-
-.repository-information>div {
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-}
-
-.repository-information>div>span {
-  padding-left: 10px;
-}
-
-.repositoryListHeader {
-  text-transform: uppercase;
-  letter-spacing: .5rem;
 }
