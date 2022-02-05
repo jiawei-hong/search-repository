@@ -10,16 +10,18 @@ function RepositoryList() {
   const [maxRepositoryCount, setMaxRepositoryCount] = useState(0);
   const [page, setPage] = useState(1);
   const [repository, setRepository] = useState([]);
+  const [error, setError] = useState('');
+
   const getTenRepository = useCallback(async (username, page) => {
     const getRepositoryWithPage = await getReposWithUsernameAndPage(username, page);
 
-    if (getRepositoryWithPage instanceof Array) {
+    if (!getRepositoryWithPage.status) {
       setRepository(repos => [
         ...repos,
         ...getRepositoryWithPage
       ])
     } else {
-      console.error(getRepositoryWithPage.data.message);
+      setError(getRepositoryWithPage.data.message);
     }
   }, []);
 
@@ -29,6 +31,8 @@ function RepositoryList() {
     if (!profile.status) {
       setMaxRepositoryCount(profile.public_repos);
       setProfile(profile);
+    } else {
+      setError(`This user was ${profile.data.message}`);
     }
   }, [])
 
@@ -37,8 +41,10 @@ function RepositoryList() {
   }, [params.username, getProfile]);
 
   useEffect(() => {
-    getTenRepository(params.username, page);
-  }, [params.username, page, getTenRepository]);
+    if (Object.keys(profile).length > 0) {
+      getTenRepository(params.username, page);
+    }
+  }, [params.username, page, getTenRepository, profile]);
 
   async function scroll(e) {
     const { scrollHeight, clientHeight, scrollTop } = e.target;
@@ -52,9 +58,9 @@ function RepositoryList() {
   return (
     <React.Fragment>
       {
-        Object.keys(profile).length === 0 ? (
+        error.length > 0 ? (
           <div className="container mx-auto mt-2">
-            <Alert color="red" text="This User Not Found..." />
+            <Alert variant="error" text={error} />
           </div>
         ) : (
           <div className="container grid grid-cols-[500px_1fr] mx-auto pt-5 repository-list-cotainer h-screen overflow-y-scroll px-5" onScroll={e => scroll(e)}>
@@ -124,7 +130,7 @@ function RepositoryList() {
                     }
                   </ul>
                 ) : (
-                  <Alert color="blue" text={`${profile.login} doesn’t have any repositories that match.`} />
+                  <Alert variant="info" text={`${profile.login} doesn’t have any repositories.`} />
                 )
               }
             </div>
