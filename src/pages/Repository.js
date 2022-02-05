@@ -1,11 +1,13 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react/cjs/react.development";
 import { getRepository } from "../api";
 import Alert from '../components/Alert';
 
 function Repository() {
   const params = useParams();
+  const navigate = useNavigate();
+
   const [repository, setRepository] = useState({});
   const [error, setError] = useState('');
 
@@ -24,11 +26,12 @@ function Repository() {
   return (
     <React.Fragment>
       <div className="container mx-auto p-5">
+        <div className="text-2xl cursor-pointer" onClick={() => navigate(-1)}>&crarr;</div>
         {
           error.length > 0 ? (
             <Alert variant="error" text={error} />
           ) : (
-            <div className="mt-5 p-5 rounded border border-gray-300">
+            <div className="p-5 rounded border border-gray-300">
               <a className="text-2xl text-blue-500 hover:text-blue-700 hover:underline" href={repository.html_url} rel='noreferrer' target={'_blank'}>{repository.full_name}</a>
 
               <div className="py-5 border-gray-200 border-b text-gray-500">{repository.description}</div>
