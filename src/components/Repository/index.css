@@ -1,0 +1,18 @@
+.in-list,
+.in-list>div,
+.not-in-list>div {
+    @apply flex items-center;
+}
+
+.in-list>div>:first-child,
+.not-in-list>div>:first-child {
+    @apply mr-0.5;
+}
+
+.in-list>div:not(:first-child) {
+    @apply ml-5;
+}
+
+.not-in-list>div:not(:first-child) {
+    @apply mt-2;
+}
