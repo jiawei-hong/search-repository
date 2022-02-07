@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Dcard Frontend Intern Home Work
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 如何啟動
+1. [已經部署好的網址](https://dcard-2022-frontend-homework.herokuapp.com/)
 
-## Available Scripts
+2. npm run start：
+    ```shell
+    npm run start
+    ```
+2. npm run build:
+    ```shell
+    npm run build
 
-In the project directory, you can run:
+    npm install -g serve
 
-### `npm start`
+    serve -s build
+    ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# 目錄結構
+```
+|-- .gitignore                      # 控制檔案與資料夾不上傳到Github
+|-- package.json                    # 專案資訊
+|-- package-lock.json               # package、dependency 安裝資訊
+|-- postcss.config.js               # Post CSS 設定檔
+|-- README.md                       # 說明文件
+|-- tailwind.config.js              # Tailwind CSS 設定檔
+|-- public
+|-- src
+    |-- api.js                      # 存放串接Github API
+    |-- App.css
+    |-- App.js
+    |-- App.test.js
+    |-- index.css
+    |-- index.js
+    |-- logo.svg
+    |-- reportWebVitals.js
+    |-- setupTests.js
+    |-- components                  # 存放專案中使用到的元件
+    |   |-- Alert                   # 顯示消息的元件
+    |   |   |-- index.css
+    |   |   |-- index.js
+    |   |-- Icon                    # 顯示圖標的原件
+    |   |   |-- index.js
+    |   |-- Repository              # 顯示儲存庫的詳細資訊元件
+    |   |   |-- index.css
+    |   |   |-- index.js
+    |   |-- RepositoryList          # 儲存庫清單的元件
+    |       |-- Sidebar.js
+    |-- pages                       # 存放顯示儲存庫頁面
+        |-- Repository.js           # 顯示使用者單個的儲存庫頁面
+        |-- RepositoryList.js       # 顯示使用者所有的儲存庫頁面
+```
