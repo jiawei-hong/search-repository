@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react/cjs/react.development";
 import { getRepository } from "../api";
 import Alert from '../components/Alert';
 import Repository from "../components/Repository";
