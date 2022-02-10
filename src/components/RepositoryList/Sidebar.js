@@ -6,7 +6,7 @@ function RepositorySidebar({ profile }) {
             <img className="rounded-full border border-gray-300" src={profile.avatar_url} width={260} height={260} alt="" />
 
             <div>
-                <span className="user-name d-block">{profile.name}</span>
+                <header className="user-name d-block">{profile.name}</header>
                 <span className="user-nickname block text-gray-500">{profile.login}</span>
             </div>
 
