@@ -39,18 +39,20 @@ function Repository({ repo = {}, settings = { inList: false } }) {
                 </div>
 
                 {
-                    !settings.inList && (
-                        <React.Fragment>
-                            <div>
-                                <EyeIcon className="inline-block fill-gray-500" />
-                                <span className="text-gray-500">{repo.watchers_count} watchers</span>
-                            </div>
+                    repo.forks_count > 0 && (
+                        <div>
+                            <ForkIcon className="inline-block fill-gray-500" />
+                            <span className="text-gray-500">{repo.forks_count} {!settings.inList ? 'forks' : ''}</span>
+                        </div>
+                    )
+                }
 
-                            <div>
-                                <ForkIcon className="inline-block fill-gray-500" />
-                                <span className="text-gray-500">{repo.forks_count} forks</span>
-                            </div>
-                        </React.Fragment>
+                {
+                    !settings.inList && (
+                        <div>
+                            <EyeIcon className="inline-block fill-gray-500" />
+                            <span className="text-gray-500">{repo.watchers_count} watchers</span>
+                        </div>
                     )
                 }
 
