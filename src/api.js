@@ -14,7 +14,7 @@ export const getUserProfile = username => githubRequest.get(`/users/${username}`
 export const getRepository = (owner, repository) => githubRequest.get(`/repos/${owner}/${repository}`);
 export const getReposWithUsernameAndPage = (username, page) => githubRequest.get(`/users/${username}/repos`, {
   headers: headerConfig, params: {
-    sort: 'created',
+    sort: 'pushed',
     per_page: 10,
     page
   }
