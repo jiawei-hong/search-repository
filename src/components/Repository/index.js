@@ -1,10 +1,39 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import { StarIcon, LicenseIcon, EyeIcon, ForkIcon } from "../Icon";
 import languageColors from "language-colors";
+import { getRepoMostUseLanguages } from '../../api';
 import './index.css';
 
 function Repository({ repo = {}, settings = { inList: false } }) {
+    const [language, setLanguage] = useState({
+        text: repo.language,
+        color: null,
+    });
+
+    useEffect(() => {
+        async function getMostUseLanguages() {
+            const languages = await getRepoMostUseLanguages(repo.owner.login, repo.name);
+            const languagesKeys = Object.keys(languages);
+
+            if (languagesKeys.length > 0) {
+                setLanguage({
+                    text: languagesKeys[0],
+                    color: languageColors[languagesKeys[0].toLowerCase()]
+                });
+            }
+        }
+
+        if (!repo.language) {
+            getMostUseLanguages();
+        } else {
+            setLanguage({
+                ...language,
+                color: languageColors[repo.language.toLowerCase()]
+            })
+        }
+    }, [language, repo]);
+
     return (
         <div className={`py-5 ${settings.inList ? "first:border-t border-b border-gray-200" : ""}`}>
             <h3 className="mb-1 text-2xl text-blue-500 hover:underline">
@@ -23,12 +52,12 @@ function Repository({ repo = {}, settings = { inList: false } }) {
 
             <div className={`text-sm mt-2 ${settings.inList ? "in-list" : "not-in-list"}`}>
                 {
-                    settings.inList && (
+                    settings.inList && language.color && language.text && (
                         <div>
                             <span
                                 className="inline-block rounded-full w-3 h-3"
-                                style={{ backgroundColor: repo.language ? languageColors[repo.language.toLowerCase()] : "#ccc" }}></span>
-                            <span className="text-gray-500 ml-1">{repo.language ?? "Undefined"}</span>
+                                style={{ backgroundColor: language.color }}></span>
+                            <span className="text-gray-500 ml-1">{language.text}</span>
                         </div>
                     )
                 }
