@@ -7,7 +7,7 @@ import './index.css';
 
 function Repository({ repo = {}, settings = { inList: false } }) {
     const [language, setLanguage] = useState({
-        text: repo.language,
+        text: "",
         color: null,
     });
 
@@ -24,15 +24,17 @@ function Repository({ repo = {}, settings = { inList: false } }) {
             }
         }
 
-        if (!repo.language) {
-            getMostUseLanguages();
-        } else {
-            setLanguage({
-                ...language,
-                color: languageColors[repo.language.toLowerCase()]
-            })
+        if (Object.keys(repo).length > 0) {
+            if (!repo.language) {
+                getMostUseLanguages();
+            } else {
+                setLanguage({
+                    text: repo.language,
+                    color: languageColors[repo.language.toLowerCase()],
+                });
+            }
         }
-    }, [language, repo]);
+    }, [repo]);
 
     return (
         <div className={`py-5 ${settings.inList ? "first:border-t border-b border-gray-200" : ""}`}>
