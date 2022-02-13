@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getRepository } from "../api";
 import Alert from '../components/Alert';
 import Repository from "../components/Repository";
+import RepositoryMarkdown from '../components/Markdown';
 
 function RepositoryPage() {
   const params = useParams();
@@ -30,11 +31,15 @@ function RepositoryPage() {
           error ? (
             <Alert variant="error" text={error} />
           ) : (
-            <div className="p-3 rounded border border-gray-300">
-              <div className="text-2xl cursor-pointer" onClick={() => navigate(-1)}>&crarr;</div>
+            <React.Fragment>
+              <div className="p-3 rounded border border-gray-300">
+                <div className="text-2xl cursor-pointer" onClick={() => navigate(-1)}>&crarr;</div>
 
-              <Repository repo={repository} />
-            </div>
+                <Repository repo={repository} />
+              </div>
+
+              <RepositoryMarkdown owner={repository.owner} repo={repository.name} />
+            </React.Fragment>
           )
         }
       </div>

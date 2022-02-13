@@ -20,3 +20,4 @@ export const getReposWithUsernameAndPage = (username, page) => githubRequest.get
   }
 });
 export const getRepoMostUseLanguages = (repo_username, repo_name) => githubRequest.get(`/repos/${repo_username}/${repo_name}/languages`);
+export const getRepoReadMarkdown = (repo_username, repo_name) => githubRequest.get(`/repos/${repo_username}/${repo_name}/contents/README.md`);
