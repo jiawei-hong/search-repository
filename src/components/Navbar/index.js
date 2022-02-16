@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -17,7 +17,9 @@ function Navbar() {
 
   return (
     <div className="flex items-center h-12 w-100 w-full bg-blue-900 h-50">
-      <div className="text-2xl ml-1 mr-auto text-white">Github</div>
+      <div className="text-2xl ml-1 mr-auto text-white">
+        <Link to={"/"}>Github</Link>
+      </div>
 
       <div className="mr-auto">
         <input
