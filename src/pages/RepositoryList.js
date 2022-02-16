@@ -33,6 +33,8 @@ function RepositoryListPage() {
     if (!profile.status) {
       setMaxRepositoryCount(profile.public_repos);
       setProfile(profile);
+      setRepository([])
+      setPage(1)
     } else {
       setError(`This user was ${profile.data.message}`);
     }
@@ -79,8 +81,8 @@ function RepositoryListPage() {
                   repository.length > 0 ? (
                     <React.Fragment>
                       {
-                        repository.map(repo => (
-                          <Repository repo={repo} settings={{ inList: true }} key={repo.id} />
+                        repository.map((repo,i) => (
+                          <Repository repo={repo} settings={{ inList: true }} key={i} />
                         ))
                       }
                     </React.Fragment>
