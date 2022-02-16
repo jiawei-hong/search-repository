@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getUserProfile, getReposWithUsernameAndPage } from "../api";
 import Alert from "../components/Alert";
+import Navbar from '../components/Navbar';
 import RepositorySidebar from "../components/RepositoryList/Sidebar";
 import Repository from "../components/Repository";
 
@@ -58,6 +59,8 @@ function RepositoryListPage() {
 
   return (
     <React.Fragment>
+      <Navbar />
+
       {
         error ? (
           <div className="container mx-auto mt-3">

@@ -3,6 +3,7 @@ import { Buffer } from "buffer";
 import { useParams, useNavigate } from "react-router-dom";
 import { getRepository, getRepoReadMarkdown } from "../api";
 import Alert from '../components/Alert';
+import Navbar from '../components/Navbar';
 import Repository from "../components/Repository";
 import RepositoryMarkdown from '../components/Markdown';
 
@@ -37,6 +38,8 @@ function RepositoryPage() {
 
   return (
     <React.Fragment>
+      <Navbar />
+
       <div className="container mx-auto p-5">
         {
           error ? (
