@@ -52,6 +52,20 @@ function Repository({ repo = {}, settings = { inList: false } }) {
                 {repo.description}
             </div>
 
+            {
+                repo.topics &&(
+                    <div className="mt-2">
+                        {
+                            repo.topics.map((topic,i) => (
+                                <span key={i} className="mr-1 px-3 py-0.5 rounded-full bg-sky-200/100 text-blue-500 hover:cursor-pointer hover:bg-blue-500 hover:text-white">
+                                    <a href={`https://github.com/topics/${topic}`}>{topic}</a>
+                                </span>
+                            ))
+                        }
+                    </div>
+                )
+            }
+
             <div className={`text-sm mt-2 ${settings.inList ? "in-list" : "not-in-list"}`}>
                 {
                     settings.inList && language.color && language.text && (
