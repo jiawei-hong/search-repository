@@ -40,7 +40,7 @@ function RepositoryPage() {
     <React.Fragment>
       <Navbar />
 
-      <div className="container mx-auto p-5">
+      <div className="container mx-auto p-5 h-screen overflow-y-scroll">
         {
           error ? (
             <Alert variant="error" text={error} />

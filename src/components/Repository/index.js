@@ -41,7 +41,7 @@ function Repository({ repo = {}, settings = { inList: false } }) {
             <h3 className="mb-1 text-2xl text-blue-500 hover:underline">
                 {
                     settings.inList ? (
-                        <Link to={`./${repo.name}`}>{repo.name}</Link>
+                        <Link to={`/users/${repo.owner.login}/repos/${repo.name}`}>{repo.name}</Link>
                     ) : (
                         <a href={repo.html_url} rel="noreferrer" target={"_blank"}>{repo.full_name}</a>
                     )
@@ -54,10 +54,10 @@ function Repository({ repo = {}, settings = { inList: false } }) {
 
             {
                 repo.topics &&(
-                    <div className="mt-2">
+                    <div className="mt-2 flex flex-wrap">
                         {
                             repo.topics.map((topic,i) => (
-                                <span key={i} className="mr-1 px-3 py-0.5 rounded-full bg-sky-200/100 text-blue-500 hover:cursor-pointer hover:bg-blue-500 hover:text-white">
+                                <span key={i} className="m-1 px-3 py-0.5 rounded-full bg-sky-200/100 text-blue-500 hover:cursor-pointer hover:bg-blue-500 hover:text-white">
                                     <a href={`https://github.com/topics/${topic}`}>{topic}</a>
                                 </span>
                             ))

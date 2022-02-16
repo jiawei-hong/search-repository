@@ -8,6 +8,7 @@ import {
   Routes,
   Route
 } from "react-router-dom";
+import Trend from './pages/Trend';
 import RepositoryList from './pages/RepositoryList';
 import Repository from './pages/Repository';
 
@@ -17,6 +18,8 @@ ReactDOM.render(
       <Routes>
         <Route path="*" element={<App />} />
 
+        <Route path='/' element={<Trend /> } />
+        
         <Route path="users">
           <Route exact path=":username">
             <Route exact path="repos">
