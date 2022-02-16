@@ -11,16 +11,18 @@ function Trend() {
   const [error, setError] = useState("");
 
   const getTenRepository = useCallback(async (page) => {
-    const getRepositoryWithPage = await getMostStarsWithRepository(page);
+    if (page) {
+      const getRepositoryWithPage = await getMostStarsWithRepository(page);
 
-    if (!getRepositoryWithPage.status) {
-      if (maxRepositoryCount === 0) {
-        setMaxRepositoryCount(getRepositoryWithPage.total_count);
+      if (!getRepositoryWithPage.status) {
+        if (maxRepositoryCount === 0) {
+          setMaxRepositoryCount(getRepositoryWithPage.total_count);
+        }
+
+        setRepository((repos) => [...repos, ...getRepositoryWithPage.items]);
+      } else {
+        setError(getRepositoryWithPage.data.message);
       }
-
-      setRepository((repos) => [...repos, ...getRepositoryWithPage.items]);
-    } else {
-      setError(getRepositoryWithPage.data.message);
     }
   }, []);
 
@@ -53,12 +55,8 @@ function Trend() {
         ) : (
           repository.length > 0 && (
             <React.Fragment>
-              {repository.map((repo,i) => (
-                <Repository
-                  repo={repo}
-                  settings={{ inList: true }}
-                  key={i}
-                />
+              {repository.map((repo, i) => (
+                <Repository repo={repo} settings={{ inList: true }} key={i} />
               ))}
             </React.Fragment>
           )
