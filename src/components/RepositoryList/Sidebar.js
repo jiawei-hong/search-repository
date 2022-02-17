@@ -56,10 +56,10 @@ function RepositorySidebar({ profile, organizations }) {
                 }
             </div>
 
-            <div className="mt-3 mb-3 pt-2 border-t">
-                <h2 className="mb-2">Organizations</h2>
-                {
-                    organizations.length > 0 && (
+            {
+                organizations.length > 0 && (
+                    <div className="mt-3 mb-3 pt-2 border-t">
+                        <h2 className="mb-2">Organizations</h2>
                         <div className="flex flex-wrap">
                             {
                                 organizations.map((organization, i) => (
@@ -69,10 +69,10 @@ function RepositorySidebar({ profile, organizations }) {
                                 ))
                             }
                         </div>
-                    )
-                }
-            </div>
-        </div >
+                    </div>
+                )
+            }
+        </div>
     )
 }
 
