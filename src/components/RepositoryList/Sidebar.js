@@ -1,6 +1,7 @@
-import { UserIcon } from '../Icon';
+import React from 'react';
+import { UserIcon, CompanyIcon, LocationIcon, LinkIcon } from '../Icon';
 
-function RepositorySidebar({ profile }) {
+function RepositorySidebar({ profile, organizations }) {
     return (
         <div className="mx-auto">
             <img className="rounded-full border border-gray-300" src={profile.avatar_url} width={260} height={260} alt="" />
@@ -24,7 +25,54 @@ function RepositorySidebar({ profile }) {
                     <span className="text-gray-500">following</span>
                 </a>
             </div>
-        </div>
+
+            <div className="mt-3 mb-3">
+                {
+                    profile['company'] && (
+                        <div className="mt-2 mb-2">
+                            <CompanyIcon className="inline-block fill-gray-500" />
+                            <span className="pl-2 text-gray-700">{profile['company']}</span>
+                        </div>
+                    )
+                }
+
+                {
+                    profile['location'] && (
+
+                        <div className="mt-2 mb-2">
+                            <LocationIcon className="inline-block fill-gray-500" />
+                            <span className="pl-2 text-gray-700">{profile['location']}</span>
+                        </div>
+                    )
+                }
+
+                {
+                    profile['blog'] && (
+                        <div className="mt-2 mb-2">
+                            <LinkIcon className="inline-block fill-gray-500" />
+                            <span className="pl-2 text-gray-700">{profile['blog']}</span>
+                        </div>
+                    )
+                }
+            </div>
+
+            <div className="mt-3 mb-3 pt-2 border-t">
+                <h2 className="mb-2">Organizations</h2>
+                {
+                    organizations.length > 0 && (
+                        <div className="flex flex-wrap">
+                            {
+                                organizations.map((organization, i) => (
+                                    <a className="pr-2" href={`https://github.com/${organization.login}`} key={i}>
+                                        <img className="border rounded" width={32} height={32} src={organization.avatar_url} alt={organization.login} />
+                                    </a>
+                                ))
+                            }
+                        </div>
+                    )
+                }
+            </div>
+        </div >
     )
 }
 

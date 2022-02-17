@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getUserProfile, getReposWithUsernameAndPage } from "../api";
+import {
+  getUserProfile,
+  getReposWithUsernameAndPage,
+  getUserOrganizations,
+} from "../api";
 import Alert from "../components/Alert";
 import Navbar from "../components/Navbar";
 import RepositorySidebar from "../components/RepositoryList/Sidebar";
@@ -12,6 +16,7 @@ function RepositoryListPage() {
   const [maxRepositoryCount, setMaxRepositoryCount] = useState(0);
   const [page, setPage] = useState(1);
   const [repository, setRepository] = useState([]);
+  const [organizations, setOrganizations] = useState("");
   const [error, setError] = useState("");
 
   async function getRepository(page = 1) {
@@ -19,6 +24,8 @@ function RepositoryListPage() {
       params.username,
       page
     );
+
+    setPage(page);
 
     if (!getRepositoryWithPage.status) {
       setRepository((repos) => [...repos, ...getRepositoryWithPage]);
@@ -30,10 +37,12 @@ function RepositoryListPage() {
   useEffect(() => {
     async function getProfile() {
       const profile = await getUserProfile(params.username);
+      const userOrganization = await getUserOrganizations(params.username);
 
       if (!profile.status) {
         setMaxRepositoryCount(profile.public_repos);
         setProfile(profile);
+        setOrganizations(userOrganization);
       } else {
         setError(`This user was ${profile.data.message}`);
       }
@@ -62,7 +71,6 @@ function RepositoryListPage() {
       scrollHeight === clientHeight + scrollTop &&
       repository.length < maxRepositoryCount
     ) {
-      setPage(page + 1);
       getRepository(page + 1);
     }
   }
@@ -80,7 +88,7 @@ function RepositoryListPage() {
           className="container grid grid-cols-[.25fr_.75fr] mx-auto pt-5 repository-list-cotainer h-screen overflow-y-scroll px-5"
           onScroll={(e) => scroll(e)}
         >
-          <RepositorySidebar profile={profile} />
+          <RepositorySidebar profile={profile} organizations={organizations} />
 
           <div>
             {repository.length > 0 ? (

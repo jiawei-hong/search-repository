@@ -10,9 +10,9 @@ const headerConfig = {
 
 githubRequest.interceptors.response.use(res => res.data, err => err.response);
 
-// https://api.github.com/search/repositories?q=stars:%3E10000&sort=stars&order=desc&per_page=10&page=1
 export const getMostStarsWithRepository = page => githubRequest.get(`/search/repositories?q=stars:%3E10000&sort=stars&order=desc&per_page=10&page=${page}`)
 export const getUserProfile = username => githubRequest.get(`/users/${username}`);
+export const getUserOrganizations = username => githubRequest.get(`https://api.github.com/users/${username}/orgs`)
 export const getRepository = (owner, repository) => githubRequest.get(`/repos/${owner}/${repository}`);
 export const getReposWithUsernameAndPage = (username, page) => githubRequest.get(`/users/${username}/repos`, {
   headers: headerConfig, params: {
