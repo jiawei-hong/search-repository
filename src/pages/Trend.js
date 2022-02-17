@@ -1,8 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getMostStarsWithRepository } from "../api";
 import Alert from "../components/Alert";
 import Navbar from "../components/Navbar";
-import Repository from "../components/Repository";
+import RepositoryList from "../components/RepositoryList";
 
 function Trend() {
   const [maxRepositoryCount, setMaxRepositoryCount] = useState(0);
@@ -10,25 +10,23 @@ function Trend() {
   const [repository, setRepository] = useState([]);
   const [error, setError] = useState("");
 
-  const getTenRepository = useCallback(async (page) => {
-    if (page) {
-      const getRepositoryWithPage = await getMostStarsWithRepository(page);
+  async function getTenRepository() {
+    const getRepositoryWithPage = await getMostStarsWithRepository(page);
 
-      if (!getRepositoryWithPage.status) {
-        if (maxRepositoryCount === 0) {
-          setMaxRepositoryCount(getRepositoryWithPage.total_count);
-        }
-
-        setRepository((repos) => [...repos, ...getRepositoryWithPage.items]);
-      } else {
-        setError(getRepositoryWithPage.data.message);
+    if (!getRepositoryWithPage.status) {
+      if (maxRepositoryCount === 0) {
+        setMaxRepositoryCount(getRepositoryWithPage.total_count);
       }
+
+      setRepository((repos) => [...repos, ...getRepositoryWithPage.items]);
+    } else {
+      setError(getRepositoryWithPage.data.message);
     }
-  }, []);
+  }
 
   useEffect(() => {
-    getTenRepository(page);
-  }, [page, getTenRepository]);
+    getTenRepository();
+  }, [page]);
 
   async function scroll(e) {
     const { scrollHeight, clientHeight, scrollTop } = e.target;
@@ -38,7 +36,6 @@ function Trend() {
       repository.length < maxRepositoryCount
     ) {
       setPage(page + 1);
-      getTenRepository();
     }
   }
 
@@ -53,13 +50,7 @@ function Trend() {
         {error ? (
           <Alert variant="error" text={error} />
         ) : (
-          repository.length > 0 && (
-            <React.Fragment>
-              {repository.map((repo, i) => (
-                <Repository repo={repo} settings={{ inList: true }} key={i} />
-              ))}
-            </React.Fragment>
-          )
+          repository.length > 0 && <RepositoryList repository={repository} />
         )}
       </div>
     </React.Fragment>
