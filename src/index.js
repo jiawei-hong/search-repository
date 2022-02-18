@@ -1,35 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import AppRouter from './router';
 import reportWebVitals from './reportWebVitals';
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
-import Trend from './pages/Trend';
-import RepositoryList from './pages/RepositoryList';
-import Repository from './pages/Repository';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="*" element={<App />} />
-
-        <Route path='/' element={<Trend /> } />
-        
-        <Route path="users">
-          <Route exact path=":username">
-            <Route exact path="repos">
-              <Route exact index element={<RepositoryList />} />
-              <Route exact path=":repo" element={<Repository />} />
-            </Route>
-          </Route>
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <AppRouter />
   </React.StrictMode >,
   document.getElementById('root')
 );
