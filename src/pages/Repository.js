@@ -5,11 +5,12 @@ import Alert from '../components/Alert';
 import Navbar from '../components/Navbar';
 import Repository from "../components/Repository";
 import RepositoryMarkdown from '../components/Markdown';
+import Loader from "../components/Loader";
 
 function RepositoryPage() {
   const params = useParams();
   const navigate = useNavigate();
-
+  const [loading, setLoading] = useState(true);
   const [repository, setRepository] = useState({});
   const [error, setError] = useState('');
 
@@ -19,6 +20,7 @@ function RepositoryPage() {
 
       if (!repo.status) {
         setRepository(repo);
+        setLoading(false);
       } else {
         setError(`Repository ${repo.data.message}.`);
       }
@@ -35,6 +37,10 @@ function RepositoryPage() {
             <Alert variant="error" text={error} />
           ) : (
             <React.Fragment>
+              {
+                loading && <Loader />
+              }
+
               <div className="p-3 mb-3 rounded border border-gray-300">
                 <div className="text-2xl cursor-pointer" onClick={() => navigate(-1)}>&crarr;</div>
 

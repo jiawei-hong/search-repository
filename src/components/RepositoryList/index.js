@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getReposWithUsernameAndPage, getMostStarsWithRepository } from "../../api";
 import Repository from "../Repository";
+import Loader from '../Loader';
 
 function RepositoryList({ username, maxRepositoryCount, inTrendPage = false }) {
   const [repository, setRepository] = useState([]);
   const [page, setPage] = useState(1)
+  const [loading, setLoading] = useState(true);
 
   async function getRepository(page = 1) {
     let userRepository = null;
@@ -22,6 +24,8 @@ function RepositoryList({ username, maxRepositoryCount, inTrendPage = false }) {
         ...repos,
         ...inTrendPage ? userRepository.items : userRepository
       ])
+
+      setLoading(false);
     }
   }
 
@@ -33,6 +37,7 @@ function RepositoryList({ username, maxRepositoryCount, inTrendPage = false }) {
       scrollHeight === clientHeight + scrollTop &&
       repository.length < maxRepositoryCount
     ) {
+      setLoading(true);
       getRepository(page);
     }
   }
@@ -49,13 +54,19 @@ function RepositoryList({ username, maxRepositoryCount, inTrendPage = false }) {
   }, [username])
 
   return (
-    <div className="h-screen overflow-y-scroll" onScroll={e => scroll(e)}>
+    <React.Fragment>
       {
-        repository.map((repo, i) => (
-          <Repository repo={repo} settings={{ inList: true }} key={i} />
-        ))
+        loading && <Loader />
       }
-    </div>
+
+      <div className="h-screen overflow-y-scroll" onScroll={e => scroll(e)}>
+        {
+          repository.map((repo, i) => (
+            <Repository repo={repo} settings={{ inList: true }} key={i} />
+          ))
+        }
+      </div>
+    </React.Fragment>
   );
 }
 
