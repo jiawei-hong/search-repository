@@ -1,63 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { getMostStarsWithRepository } from "../api";
-import Alert from "../components/Alert";
 import Navbar from "../components/Navbar";
-import Repository from "../components/Repository";
+import Alert from "../components/Alert";
+import RepositoryList from "../components/RepositoryList";
+import { getMostStarsWithRepository } from "../api";
 
 function Trend() {
   const [maxRepositoryCount, setMaxRepositoryCount] = useState(0);
-  const [page, setPage] = useState(1);
-  const [repository, setRepository] = useState([]);
-  const [error, setError] = useState("");
-
-  async function getTenRepository() {
-    const getRepositoryWithPage = await getMostStarsWithRepository(page);
-
-    if (!getRepositoryWithPage.status) {
-      if (maxRepositoryCount === 0) {
-        setMaxRepositoryCount(getRepositoryWithPage.total_count);
-      }
-
-      setRepository((repos) => [...repos, ...getRepositoryWithPage.items]);
-    } else {
-      setError(getRepositoryWithPage.data.message);
-    }
-  }
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    getTenRepository();
-  }, [page]);
+    async function getMaxRepositoryCount() {
+      const trendRepository = await getMostStarsWithRepository(1);
 
-  async function scroll(e) {
-    const { scrollHeight, clientHeight, scrollTop } = e.target;
-
-    if (
-      scrollHeight === clientHeight + scrollTop &&
-      repository.length < maxRepositoryCount
-    ) {
-      setPage(page + 1);
+      if (!trendRepository.status) {
+        setMaxRepositoryCount(trendRepository.total_count);
+      } else {
+        setError(trendRepository.data.message);
+      }
     }
-  }
+
+    getMaxRepositoryCount();
+  }, [])
+
 
   return (
     <React.Fragment>
       <Navbar />
 
-      <div
-        className="container mx-auto pt-5 repository-list-cotainer h-screen overflow-y-scroll px-5"
-        onScroll={(e) => scroll(e)}
-      >
-        {error ? (
-          <Alert variant="error" text={error} />
-        ) : (
-          <React.Fragment>
-            {
-              repository.map((repo, i) => (
-                <Repository repo={repo} settings={{ inList: true }} key={i} />
-              ))
-            }
-          </React.Fragment>
-        )}
+      <div className="container mx-auto">
+        {
+          error ? (
+            <div className="mt-2">
+              <Alert variant={'error'} text={error} />
+            </div>
+          ) : (
+            <RepositoryList maxRepositoryCount={maxRepositoryCount} inTrendPage={true} />
+          )
+        }
       </div>
     </React.Fragment>
   );

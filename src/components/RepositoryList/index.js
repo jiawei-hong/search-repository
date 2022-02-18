@@ -1,26 +1,34 @@
 import { useEffect, useState } from "react";
-import { getReposWithUsernameAndPage } from "../../api";
+import { getReposWithUsernameAndPage, getMostStarsWithRepository } from "../../api";
 import Repository from "../Repository";
 
-function RepositoryList({ username, maxRepositoryCount }) {
+function RepositoryList({ username, maxRepositoryCount, inTrendPage = false }) {
   const [repository, setRepository] = useState([]);
   const [page, setPage] = useState(1)
 
   async function getRepository(page = 1) {
-    const userRepository = await getReposWithUsernameAndPage(username, page);
+    let userRepository = null;
+
+    if (inTrendPage) {
+      userRepository = await getMostStarsWithRepository(page);
+    } else {
+      userRepository = await getReposWithUsernameAndPage(username, page);
+    }
 
     setPage(page + 1);
 
     if (!userRepository.status) {
       setRepository(repos => [
         ...repos,
-        ...userRepository
+        ...inTrendPage ? userRepository.items : userRepository
       ])
     }
   }
 
   async function scroll(e) {
     const { scrollHeight, clientHeight, scrollTop } = e.target;
+
+    console.log(scrollHeight, clientHeight);
 
     if (
       scrollHeight !== clientHeight &&
