@@ -1,22 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { getUserOrganizations } from '../../api';
-import { UserIcon, CompanyIcon, LocationIcon, LinkIcon } from '../Icon';
+import IconText from '../IconText';
+import OrganizationList from '../OrganizationList';
+import { UserIcon } from '../Icon';
 
 function RepositorySidebar({ username, profile }) {
-    const [organizations, setOrganizations] = useState([]);
-
-    useEffect(() => {
-        async function getOrganization() {
-            const userOrganization = await getUserOrganizations(username)
-
-            if (!userOrganization.status) {
-                setOrganizations(userOrganization)
-            }
-        }
-
-        getOrganization();
-    }, [username])
-
     return (
         <div className="mx-auto">
             <img className="rounded-full border border-gray-300" src={profile.avatar_url} width={260} height={260} alt="" />
@@ -43,50 +29,13 @@ function RepositorySidebar({ username, profile }) {
 
             <div className="mt-3 mb-3">
                 {
-                    profile['company'] && (
-                        <div className="mt-2 mb-2">
-                            <CompanyIcon className="inline-block fill-gray-500" />
-                            <span className="pl-2 text-gray-700">{profile['company']}</span>
-                        </div>
-                    )
-                }
-
-                {
-                    profile['location'] && (
-
-                        <div className="mt-2 mb-2">
-                            <LocationIcon className="inline-block fill-gray-500" />
-                            <span className="pl-2 text-gray-700">{profile['location']}</span>
-                        </div>
-                    )
-                }
-
-                {
-                    profile['blog'] && (
-                        <div className="mt-2 mb-2">
-                            <LinkIcon className="inline-block fill-gray-500" />
-                            <span className="pl-2 text-gray-700">{profile['blog']}</span>
-                        </div>
-                    )
+                    ['company', 'location', 'blog'].map(information => (
+                        profile[information] && <IconText type={information} text={profile[information]} />
+                    ))
                 }
             </div>
 
-            {
-                organizations.length > 0 && (
-                    <div className="mt-3 mb-3 pt-2 border-t">
-                        <h2 className="mb-2">Organizations</h2>
-                        <div className="flex flex-wrap">
-                            {
-                                organizations.map((organization, i) => (
-                                    <a className="pr-2" href={`https://github.com/${organization.login}`} key={i}>
-                                        <img className="border rounded" width={32} height={32} src={organization.avatar_url} alt={organization.login} />
-                                    </a>
-                                ))
-                            }
-                        </div>
-                    </div>
-                )
-            }
+            <OrganizationList username={username} />
         </div>
     )
 }

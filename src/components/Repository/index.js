@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
-import { StarIcon, LicenseIcon, EyeIcon, ForkIcon } from "../Icon";
 import languageColors from "language-colors";
 import { getRepoMostUseLanguages } from '../../api';
+import TopicList from '../TopicList'
+import IconText from "../IconText";
 import './index.css';
 
 function Repository({ repo = {}, settings = { inList: false } }) {
@@ -52,19 +53,7 @@ function Repository({ repo = {}, settings = { inList: false } }) {
                 {repo.description}
             </div>
 
-            {
-                repo.topics &&(
-                    <div className="mt-2 flex flex-wrap">
-                        {
-                            repo.topics.map((topic,i) => (
-                                <span key={i} className="m-1 px-3 py-0.5 rounded-full bg-sky-200/100 text-blue-500 hover:cursor-pointer hover:bg-blue-500 hover:text-white">
-                                    <a href={`https://github.com/topics/${topic}`}>{topic}</a>
-                                </span>
-                            ))
-                        }
-                    </div>
-                )
-            }
+            <TopicList topics={repo.topics} />
 
             <div className={`text-sm mt-2 ${settings.inList ? "in-list" : "not-in-list"}`}>
                 {
@@ -78,36 +67,18 @@ function Repository({ repo = {}, settings = { inList: false } }) {
                     )
                 }
 
-                <div>
-                    <StarIcon className="inline-block fill-gray-500" />
-                    <span className="text-gray-500">{repo.stargazers_count} {!settings.inList ? 'starts' : ''}</span>
-                </div>
+                <IconText text={repo.stargazers_count} showText={'starts'} inList={settings.inList} />
 
                 {
-                    repo.forks_count > 0 && (
-                        <div>
-                            <ForkIcon className="inline-block fill-gray-500" />
-                            <span className="text-gray-500">{repo.forks_count} {!settings.inList ? 'forks' : ''}</span>
-                        </div>
-                    )
+                    repo.forks_count > 0 && <IconText type="fork" text={repo.forks_count} showText={'forks'} inList={settings.inList} />
                 }
 
                 {
-                    !settings.inList && (
-                        <div>
-                            <EyeIcon className="inline-block fill-gray-500" />
-                            <span className="text-gray-500">{repo.watchers_count} watchers</span>
-                        </div>
-                    )
+                    !settings.inList && <IconText type="eye" text={repo.watchers_count} showText={'watchers'} inList={settings.inList} />
                 }
 
                 {
-                    repo.license && (
-                        <div>
-                            <LicenseIcon className="inline-block fill-gray-500" />
-                            <span className="text-gray-500">{repo.license.name}</span>
-                        </div>
-                    )
+                    repo.license && <IconText type="license" text={repo.license.name} />
                 }
             </div>
         </div >
