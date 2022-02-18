@@ -17,16 +17,22 @@ function RepositoryListPage() {
 
       if (!userProfile.status) {
         setProfile(userProfile)
+
+        if (error.length > 0) {
+          setError('');
+        }
       } else {
         setError(`${userProfile.data.message} User`)
       }
     }
 
     getPorfile();
-  }, [params.username])
+  }, [params.username, error])
 
   return (
     <React.Fragment>
+      <Navbar />
+
       {
         error ? (
           <div className="mx-auto p-3">
@@ -34,8 +40,6 @@ function RepositoryListPage() {
           </div>
         ) : (
           <React.Fragment>
-            <Navbar />
-
             <div className="container grid grid-cols-[.25fr_.75fr] mx-auto pt-5">
               <RepositorySidebar username={params.username} profile={profile} />
 
