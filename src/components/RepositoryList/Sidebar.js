@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { getUserOrganizations } from '../../api';
 import { UserIcon, CompanyIcon, LocationIcon, LinkIcon } from '../Icon';
 
-function RepositorySidebar({ profile, organizations }) {
+function RepositorySidebar({ username, profile }) {
+    const [organizations, setOrganizations] = useState([]);
+
+    useEffect(() => {
+        async function getOrganization() {
+            const userOrganization = await getUserOrganizations(username)
+
+            if (!userOrganization.status) {
+                setOrganizations(userOrganization)
+            }
+        }
+
+        getOrganization();
+    }, [username])
+
     return (
         <div className="mx-auto">
             <img className="rounded-full border border-gray-300" src={profile.avatar_url} width={260} height={260} alt="" />

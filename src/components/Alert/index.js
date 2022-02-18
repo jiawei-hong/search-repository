@@ -15,7 +15,7 @@ function Alert({ variant = "INFO", text }) {
     }, [variant]);
 
     return (
-        <div className={`alert ${getMessageClassName}`}>
+        <div className={`max-h-20 alert ${getMessageClassName}`}>
             <div className="font-bold">{variant.toUpperCase()}:</div>
             <div>{text}</div>
         </div>
