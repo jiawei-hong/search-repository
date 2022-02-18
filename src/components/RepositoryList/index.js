@@ -28,8 +28,6 @@ function RepositoryList({ username, maxRepositoryCount, inTrendPage = false }) {
   async function scroll(e) {
     const { scrollHeight, clientHeight, scrollTop } = e.target;
 
-    console.log(scrollHeight, clientHeight);
-
     if (
       scrollHeight !== clientHeight &&
       scrollHeight === clientHeight + scrollTop &&

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Buffer } from "buffer";
 import { useParams, useNavigate } from "react-router-dom";
-import { getRepository, getRepoReadMarkdown } from "../api";
+import { getRepository } from "../api";
 import Alert from '../components/Alert';
 import Navbar from '../components/Navbar';
 import Repository from "../components/Repository";
@@ -12,8 +11,6 @@ function RepositoryPage() {
   const navigate = useNavigate();
 
   const [repository, setRepository] = useState({});
-  const [markdwon, setMarkdown] = useState('');
-  const [markdwonErr, setMarkdownErr] = useState('');
   const [error, setError] = useState('');
 
   useEffect(() => {
@@ -22,14 +19,6 @@ function RepositoryPage() {
 
       if (!repo.status) {
         setRepository(repo);
-
-        const md = await getRepoReadMarkdown(params.username, params.repo);
-
-        if (md.status) {
-          setMarkdownErr(`This Repository README Markdown ${md.data.message}.`);
-        } else {
-          setMarkdown(Buffer.from(md.content, 'base64').toString());
-        }
       } else {
         setError(`Repository ${repo.data.message}.`);
       }
@@ -52,13 +41,7 @@ function RepositoryPage() {
                 <Repository repo={repository} />
               </div>
 
-              {
-                markdwonErr ? (
-                  <Alert text={markdwonErr} />
-                ) : (
-                  <RepositoryMarkdown source={markdwon} />
-                )
-              }
+              <RepositoryMarkdown repo={params.repo} username={params.username} />
             </React.Fragment>
           )
         }

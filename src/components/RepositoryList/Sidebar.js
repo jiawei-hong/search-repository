@@ -29,8 +29,8 @@ function RepositorySidebar({ username, profile }) {
 
             <div className="mt-3 mb-3">
                 {
-                    ['company', 'location', 'blog'].map(information => (
-                        profile[information] && <IconText type={information} text={profile[information]} />
+                    ['company', 'location', 'blog'].map((information, i) => (
+                        profile[information] && <IconText key={i} type={information} text={profile[information]} />
                     ))
                 }
             </div>
