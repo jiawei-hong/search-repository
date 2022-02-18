@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getMostStarsWithRepository } from "../api";
 import Alert from "../components/Alert";
 import Navbar from "../components/Navbar";
-import RepositoryList from "../components/RepositoryList";
+import Repository from "../components/Repository";
 
 function Trend() {
   const [maxRepositoryCount, setMaxRepositoryCount] = useState(0);
@@ -50,7 +50,13 @@ function Trend() {
         {error ? (
           <Alert variant="error" text={error} />
         ) : (
-          repository.length > 0 && <RepositoryList repository={repository} />
+          <React.Fragment>
+            {
+              repository.map((repo, i) => (
+                <Repository repo={repo} settings={{ inList: true }} key={i} />
+              ))
+            }
+          </React.Fragment>
         )}
       </div>
     </React.Fragment>
