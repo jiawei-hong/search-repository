@@ -10,7 +10,7 @@ function Navbar() {
   };
 
   const handleKeydown = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && searchGithubAccount.length > 0) {
       navigate(`/users/${searchGithubAccount}/repos`);
     }
   };
