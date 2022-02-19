@@ -40,7 +40,7 @@ function RepositoryListPage() {
           </div>
         ) : (
           <React.Fragment>
-            <div className="container grid grid-cols-[.25fr_.75fr] mx-auto pt-5">
+            <div className="container md:grid md:grid-cols-[.25fr_.75fr] mx-auto pt-5">
               <RepositorySidebar username={params.username} profile={profile} />
 
               <div>

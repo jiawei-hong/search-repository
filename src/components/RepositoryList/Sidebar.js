@@ -5,10 +5,10 @@ import { UserIcon } from '../Icon';
 function RepositorySidebar({ username, profile }) {
     return (
         <div className="mx-auto">
-            <img className="rounded-full border border-gray-300" src={profile.avatar_url} width={260} height={260} alt="" />
+            <img className="inline-block rounded-full border border-gray-300 w-32 h-32 lg:w-64 lg:h-64 md:inline-block md:w-48 md:h-48" src={profile.avatar_url} alt="" />
 
-            <div>
-                <header className="user-name d-block">{profile.name}</header>
+            <div className="sm:mt-2">
+                <header className="user-name d-block font-semibold text-2xl">{profile.name}</header>
                 <span className="user-nickname block text-gray-500">{profile.login}</span>
             </div>
 
