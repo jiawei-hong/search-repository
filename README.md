@@ -1,5 +1,3 @@
-# Dcard Frontend Intern Home Work
-
 # 如何啟動
 
 1. [已經部署好的網址](https://dcard-2022-frontend-homework.herokuapp.com/)
